@@ -1,8 +1,8 @@
 <app-search-bar
-  [loading]="searching"
-  [recentSearches]="recent"
+  [loading]="isLoading"
+  [recentSearches]="recentSearches"
   (searchTerm)="onSearch($event)"
   (recentSearchClicked)="onRecent($event)"
 ></app-search-bar>
 
-<app-search-results [products]="products()"> </app-search-results>
+<app-search-results [products]="searchResults()"> </app-search-results>

@@ -1,7 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { ProductServiceTs } from './services/product.service';
 import { Product } from './model/Product';
-
+import {
+  isLoading,
+  recentSearches,
+  searchResults,
+  searchTerm
+} from './state/search.signal';
 
 @Component({
   selector: 'app-root',
@@ -11,19 +16,20 @@ import { Product } from './model/Product';
 })
 export class App {
   protected title = 'smart-search-dashboard';
-  searching = signal(false);
-  recent = signal(['iPhone', 'Laptop', 'Camera']);
-  products = signal<Product[]>([]);
+  searchTerm = searchTerm;
+  recentSearches = recentSearches;
+  searchResults = searchResults;
+  isLoading = isLoading;
   constructor(private service: ProductServiceTs) {}
   onSearch(term: string) {
-    this.searching.set(true);
+    isLoading.set(true);
 
-    const withoutDuplicate = this.recent().filter((item) => item != term);
+    const withoutDuplicate = recentSearches().filter((item) => item != term);
     const updated = [term, ...withoutDuplicate].slice(0, 5);
-    this.recent.set(updated);
+    this.recentSearches.set(updated);
     this.service.getProducts(term).subscribe((response) => {
-      this.products.set(response.products);
-      this.searching.set(false);
+      this.searchResults.set(response.products);
+      this.isLoading.set(false);
     });
   }
 
@@ -31,7 +37,5 @@ export class App {
     this.onSearch(term);
   }
 
-  ngOnDestory() {
-
-  }
+  ngOnDestory() {}
 }
