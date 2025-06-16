@@ -1,59 +1,83 @@
-# SmartSearchDashboard
+# 🔍 Smart Search Dashboard (Angular + Signals + RxJS)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+A responsive, reactive smart search UI built with Angular 17+, leveraging Signals and RxJS for a clean, modern architecture.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🎯 Features
+
+- Real-time search with debounce
+- Display product cards in a responsive grid
+- Recent search tracking (max 5)
+- Signal-based state management
+- Loading spinner with reusable overlay
+- Responsive dropdown suggestions
+- API integration with DummyJSON
+
+---
+
+## 🧠 Architecture Overview
+
+### As a Senior Developer, the approach follows:
+
+#### 1. **Requirements → Architecture**
+- Translate UI and feature requirements into logical building blocks:
+  - `SearchInputComponent`
+  - `SearchResultsComponent`
+  - `RecentSearchesComponent`
+  - `LoadingOverlayComponent`
+  - `ProductService` (API logic)
+  - `Signals/State` for local state handling
+
+#### 2. **Signal-Driven State**
+- Use `signal()`, `computed()`, and `effect()` for:
+  - Managing recent searches
+  - Storing current results
+  - Tracking search input
+  - Loading/error states
+
+#### 3. **RxJS Where Needed**
+- Use `Subject`, `debounceTime`, and `switchMap` for:
+  - Handling user input stream
+  - Avoiding unnecessary API calls
+
+#### 4. **Component Contracts**
+- Each component only receives inputs and emits outputs
+- Parent container (`AppComponent`) manages coordination and state
+- Avoid tight coupling or global state libraries unless scaling demands it
+
+#### 5. **Styling and UX**
+- TailwindCSS for rapid and responsive design
+- Animations and overlays are clean and isolated
+- Mobile-first: grid adapts to screen size with:
+  - `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`
+
+---
+
+## 🧩 Component Breakdown
+
+| Component              | Responsibility                            |
+|------------------------|--------------------------------------------|
+| `SearchBarComponent`   | Emits search terms, shows spinner, handles input |
+| `RecentSearchesComponent` | Shows recent search terms (max 5), emits click |
+| `SearchResultsComponent` | Renders product cards in a grid layout    |
+| `LoadingOverlayComponent` | Displays fullscreen spinner during API calls |
+| `ProductService`       | Makes API call, returns observable         |
+
+---
+
+## 🛠 Technologies
+
+- Angular 17+ standalone components
+- Signals API (`signal`, `effect`, `computed`)
+- RxJS for input stream handling
+- Tailwind CSS for UI
+- DummyJSON for product data
+
+---
+
+## 🚀 How to Run
 
 ```bash
+npm install
 ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
