@@ -1,0 +1,15 @@
+<br>
+<div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+  @for (product of products; track product?.id) {
+  <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition">
+    <img
+      [src]="product.thumbnail"
+      alt="{{ product.title }}"
+      class="w-full h-40 object-cover rounded"
+    />
+    <h2 class="text-lg font-semibold mt-2">{{ product.title }}</h2>
+    <p class="text-sm text-gray-600 mt-1">{{ product.description }}</p>
+    <p class="text-blue-600 font-bold mt-2">₹ {{ product.price }}</p>
+  </div>
+  }
+</div>
